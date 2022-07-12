@@ -19,7 +19,7 @@ const showCurrentUser = async (req,res) =>{
 }
 const updateUser = async (req,res) =>{
         const {email,name} = req.body;
-        if(!email ) 
+        // if(!email ) 
 
 }
 const updateUserPassword = async (req,res) =>{
