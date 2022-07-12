@@ -45,7 +45,7 @@ if(!email || !password){
     // const token = createJWT({payload:tokenUser})
     // const token = jwt.sign(tokenUser,'jwtSecret',{expiresIn:'1d'})
     attachCookiesToResponse({res,user:tokenUser});
-    res.status(StatusCodes.CREATED).json({user:tokenUser});
+    res.status(StatusCodes.OK).json({user:tokenUser});
 
 };
 
