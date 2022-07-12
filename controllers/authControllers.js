@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const {attachCookiesToResponse} = require('../utils')
+const {attachCookiesToResponse,createTokenUser} = require('../utils')
 require('dotenv').config();
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
@@ -17,7 +17,8 @@ const register = async (req,res) =>{
     const role = isFirstAccount ? "admin" : "user";
 
     const user = await User.create({name,email,password,role});
-    const tokenUser = {name:user.name,userId:user._id,role:user.role};
+    const tokenUser = createTokenUser(user);
+    // const tokenUser = {name:user.name,userId:user._id,role:user.role};
     // const token = createJWT({payload:tokenUser})
     // const token = jwt.sign(tokenUser,'jwtSecret',{expiresIn:'1d'})
     attachCookiesToResponse({res,user:tokenUser});
@@ -39,7 +40,8 @@ if(!email || !password){
     if(!isPasswordCorrect){
         throw new CustomError.UnauthenticatedError('Invalid Credentials');
     }
-    const tokenUser = {name:user.name,userId:user._id,role:user.role};
+    const tokenUser = createTokenUser(user);
+    // const tokenUser = {name:user.name,userId:user._id,role:user.role};
     // const token = createJWT({payload:tokenUser})
     // const token = jwt.sign(tokenUser,'jwtSecret',{expiresIn:'1d'})
     attachCookiesToResponse({res,user:tokenUser});
